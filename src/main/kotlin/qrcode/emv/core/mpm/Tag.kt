@@ -1,6 +1,6 @@
-package qrcode.emv.core
+package qrcode.emv.core.mpm
 
-data class Tag(val tag: String, val value: String, val subTags: MutableList<Tag>) : TLV{
+data class Tag(val tag: String, val value: String, val subTags: MutableList<Tag> = mutableListOf()) : TLV {
     override fun tag(): String {
         return tag
     }
@@ -10,15 +10,12 @@ data class Tag(val tag: String, val value: String, val subTags: MutableList<Tag>
     }
 
     override fun toString(): String {
-        if (subTags.isEmpty()) {
-            return String.format("%s%02d%s", tag, value.length, value)
-        } else {
-            val sb = StringBuilder()
-            for (subTag in subTags) {
-                sb.append(subTag.toString())
-            }
-            return String.format("%s%02d%s", tag, sb.length, sb.toString())
-        }
+        return String.format(
+            "%s%02d%s",
+            tag,
+            if (subTags.isEmpty()) value.length else subTags.joinToString("").length,
+            if (subTags.isEmpty()) value else subTags.joinToString("")
+        )
     }
 
 }

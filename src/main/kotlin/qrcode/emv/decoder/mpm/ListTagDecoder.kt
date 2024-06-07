@@ -1,7 +1,7 @@
-package qrcode.emv.decoder
+package qrcode.emv.decoder.mpm
 
-import qrcode.emv.core.Tag
-import qrcode.emv.core.TagIterator
+import qrcode.emv.core.mpm.Tag
+import qrcode.emv.core.mpm.TagIterator
 
 class ListTagDecoder(source: String)  {
 

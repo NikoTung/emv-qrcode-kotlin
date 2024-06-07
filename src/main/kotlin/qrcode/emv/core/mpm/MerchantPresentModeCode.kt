@@ -1,4 +1,4 @@
-package qrcode.emv.core
+package qrcode.emv.core.mpm
 
 enum class MerchantPresentModeCode(val tag: IntRange, val mandatory: Boolean, val template: Boolean) {
 

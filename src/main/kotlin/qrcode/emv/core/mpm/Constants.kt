@@ -1,4 +1,4 @@
-package qrcode.emv.core
+package qrcode.emv.core.mpm
 
 val tag_id_length = 2
 val value_length = 2

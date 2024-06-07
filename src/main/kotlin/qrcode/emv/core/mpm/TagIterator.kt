@@ -1,4 +1,4 @@
-package qrcode.emv.core
+package qrcode.emv.core.mpm
 
 class TagIterator(private var source: String) : Iterator<Pair<String, String>>{
 

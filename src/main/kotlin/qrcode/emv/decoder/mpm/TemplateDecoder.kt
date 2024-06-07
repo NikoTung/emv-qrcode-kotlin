@@ -1,9 +1,9 @@
-package qrcode.emv.decoder
+package qrcode.emv.decoder.mpm
 
-import qrcode.emv.core.Decoder
-import qrcode.emv.core.Tag
-import qrcode.emv.core.tag_id_length
-import qrcode.emv.core.value_length
+import qrcode.emv.core.mpm.Decoder
+import qrcode.emv.core.mpm.Tag
+import qrcode.emv.core.mpm.tag_id_length
+import qrcode.emv.core.mpm.value_length
 
 class TemplateDecoder(private val source: String, val tag: String) : Decoder {
     override fun decode(): Tag {

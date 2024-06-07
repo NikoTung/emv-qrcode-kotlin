@@ -1,8 +1,9 @@
-package qrcode.emv.decoder
+package qrcode.emv.decoder.mpm
 
-import qrcode.emv.core.Decoder
-import qrcode.emv.core.Tag
-import qrcode.emv.core.TagIterator
+import qrcode.emv.core.mpm.Decoder
+import qrcode.emv.core.mpm.Tag
+import qrcode.emv.core.mpm.TagIterator
+import qrcode.emv.exception.InvalidTagException
 
 class TagDecoder(source: String) : Decoder {
 
@@ -10,10 +11,10 @@ class TagDecoder(source: String) : Decoder {
 
     override fun decode(): Tag {
         val hasNext = tagIterator.hasNext()
-        takeIf { hasNext } ?: throw Exception("Invalid tag")
+        takeIf { hasNext } ?: throw InvalidTagException("Invalid tag")
         val nextChuck = tagIterator.next()
 
-        return Tag(nextChuck.first, nextChuck.second, mutableListOf())
+        return Tag(nextChuck.first, nextChuck.second)
 
     }
 }

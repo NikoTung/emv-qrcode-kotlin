@@ -1,0 +1,1 @@
+## EMVCo QR Code Decoder and Encoder

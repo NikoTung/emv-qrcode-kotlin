@@ -1,8 +1,8 @@
-package qrcode.emv.decoder
+package qrcode.emv.decoder.mpm
 
-import qrcode.emv.core.ChunkIterator
-import qrcode.emv.core.MerchantPresentModeCode
-import qrcode.emv.core.Tag
+import qrcode.emv.core.mpm.ChunkIterator
+import qrcode.emv.core.mpm.MerchantPresentModeCode
+import qrcode.emv.core.mpm.Tag
 import qrcode.emv.model.MerchantPresentMode
 
 class MerchantPresentModeDecode(
