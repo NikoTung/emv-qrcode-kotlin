@@ -1,14 +1,12 @@
 package qrcode.emv.core.cpm
 
-import qrcode.emv.core.cpm.BinaryTLV.Companion.LAST_BYTE_MASK
-import qrcode.emv.core.cpm.BinaryTLV.Companion.NEXT_BYTE_BITMASK
 import qrcode.emv.exception.DecodeException
 import kotlin.experimental.and
 
 class Seeker {
 
     companion object {
-        private const val MAX_LENGTH_BYTE = 2 //the actually bytes for the length
+        private const val MAX_LENGTH_BYTE = 2 //the actually max bytes for the length
         private const val LAST_8_BIT_MASK = 0xFF //0b1111,1111
 
         /**

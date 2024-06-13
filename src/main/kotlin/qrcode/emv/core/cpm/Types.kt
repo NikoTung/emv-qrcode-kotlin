@@ -58,3 +58,20 @@ data class Tag(val bytes: Int, val value: ByteArray) {
         return result
     }
 }
+
+
+const val CLASS_BITMASK = 0b11000000 // 0xC0 Tag class: bits 7-8 of the initial octet
+const val TYPE_BITMASK = 0b00100000 // 0x20 Tag type: bit 6 of the initial octet
+const val LAST_BYTE_MASK = 0b10000000 //0x80
+const val NEXT_BYTE_BITMASK = 0b00011111 // 0x1F
+enum class TagClass(val i: Int) {
+    UNIVERSAL(0b00000000), //0x00
+    APPLICATION(0b01000000), //0x40
+    CONTEXT_SPECIFIC(0b10000000), //0x80
+    PRIVATE(0b11000000) //0xC0
+}
+
+enum class DataType(val i: Int) {
+    PRIMITIVE(0b00000000), //0x00
+    CONSTRUCTED(0b00100000) //0x20
+}

@@ -1,12 +1,10 @@
-package qrcode.emv.decoder
+package qrcode.emv.decoder.mpm
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import qrcode.emv.decoder.mpm.MerchantPresentModeDecode
 import qrcode.emv.model.crc16
-import java.lang.Byte
-import kotlin.io.encoding.Base64
-import kotlin.io.encoding.ExperimentalEncodingApi
 
 class MerchantPresentModeDecodeTest {
 
@@ -28,17 +26,5 @@ class MerchantPresentModeDecodeTest {
         assertEquals(27834, source.crc16())
     }
 
-    @OptIn(ExperimentalEncodingApi::class)
-    @Test
-    fun test() {
-        val x ="#"
-        val toByte = x.toByteArray(Charsets.UTF_8)
-        println(Integer.toBinaryString(toByte[0].toInt()))
-
-        val byteArrayOf = byteArrayOf(0b00100000)
-        println(String(byteArrayOf, Charsets.UTF_8))
-
-        val decode = Base64.Mime.encode("".toByteArray(Charsets.UTF_8))
-    }
 
 }

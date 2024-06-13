@@ -2,8 +2,9 @@ package qrcode.emv.core.cpm
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import qrcode.emv.exception.DecodeException
 
-class SeekerTest{
+class SeekerTest {
 
     @Test
     fun tag_shall_have_next_byte() {
@@ -13,7 +14,7 @@ class SeekerTest{
 
     @Test
     fun tag_shall_not_have_next_byte() {
-        val byte = 0b00011111.toByte()
+        val byte = 0b00001111.toByte()
         for (i in byte downTo 1) {
             assertFalse(Seeker.hasNext(i.toByte()))
         }
@@ -46,9 +47,10 @@ class SeekerTest{
 
         assertEquals(2, Seeker.countLengthToBytes(257))
 
-        val bytes = byteArrayOf(-126, 1, 3)
+        assertThrows(DecodeException::class.java) {
+            Seeker.lengthToBytes(259)
+        }
 
-        assertArrayEquals(bytes, Seeker.lengthToBytes(259))
         for (i in 1..127) {
             assertArrayEquals(byteArrayOf(i.toByte()), Seeker.lengthToBytes(i))
         }

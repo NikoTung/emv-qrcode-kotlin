@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "1.9.22"
+    id("idea")
 }
 
 group = "me.eiko"
@@ -18,4 +19,11 @@ tasks.test {
 }
 kotlin {
     jvmToolchain(21)
+}
+
+idea {
+    module {
+        isDownloadJavadoc = true
+        isDownloadSources = true
+    }
 }

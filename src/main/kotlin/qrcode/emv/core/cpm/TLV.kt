@@ -13,16 +13,16 @@ interface BERTLV : TLV<ConsumerPresentModeCode, ByteArray> {
 
     fun format(): Format
 
-    fun stringValue(): String {
-        return format().stringValue(value())
-    }
+    fun stringValue(): String = format().stringValue(value())
+
+    fun hexValue(): String = value().joinToString("") { String.format("%02X", it) }
 
     //Debug only
-    @OptIn(ExperimentalStdlibApi::class)
     fun prettyString(): String {
+        val lengthInHexFormat = Seeker.lengthToBytes(value().size).joinToString("") { String.format("%02X", it) }
         val subTagString = subTags().joinToString("\n") { "    ${it.prettyString()}" }
         return buildString {
-            append("${tag().tag.toHexString()} ${format().stringValue(value())}")
+            append("${tag().tagString()} $lengthInHexFormat ${format().stringValue(value())}")
             if (subTagString.isNotEmpty()) {
                 append("\n")
                 append(subTagString)
@@ -32,6 +32,8 @@ interface BERTLV : TLV<ConsumerPresentModeCode, ByteArray> {
 
     //to be used in the QR code encode.
     fun getBytes(): ByteArray
+
+    fun byteArrayTag(): ByteArray
 
     override fun subTags(): List<BERTLV> = emptyList()
 
@@ -52,7 +54,7 @@ abstract class BERTLVImpl(
         if (getLength() == 0) {
             return ByteArray(1) { 0x00 }
         }
-        return code.otherTag(byteArrayOf(0x00)) + Seeker.lengthToBytes(getLength()) + value()
+        return code.otherTag(tag) + Seeker.lengthToBytes(getLength()) + value()
     }
 
     override fun tag(): ConsumerPresentModeCode {
@@ -66,50 +68,56 @@ abstract class BERTLVImpl(
     override fun subTags(): List<BERTLV> {
         return subTags
     }
+
+    override fun byteArrayTag(): ByteArray = tag
 }
 
 class Alphanumeric(
-    code: ConsumerPresentModeCode, value: ByteArray, subTags: List<BERTLV> = emptyList(), tag: ByteArray = ByteArray(0)
+    code: ConsumerPresentModeCode,
+    value: ByteArray,
+    subTags: List<BERTLV> = emptyList(),
+    tag: ByteArray = ByteArray(0)
 ) : BERTLVImpl(code, value, subTags, tag) {
 
 
-    override fun format(): Format {
-        return Format.ALPHANUMERIC
-    }
+    override fun format(): Format = Format.ALPHANUMERIC
 }
 
 class Binary(
-    code: ConsumerPresentModeCode, value: ByteArray, subTags: List<BERTLV> = emptyList(), tag: ByteArray = ByteArray(0)
+    code: ConsumerPresentModeCode,
+    value: ByteArray,
+    subTags: List<BERTLV> = emptyList(),
+    tag: ByteArray = ByteArray(0)
 ) : BERTLVImpl(code, value, subTags, tag) {
 
-    override fun format(): Format {
-        return Format.BINARY
-    }
+    override fun format(): Format = Format.BINARY
 
 }
 
 class AlphanumericSpecial(
-    code: ConsumerPresentModeCode, value: ByteArray, subTags: List<BERTLV> = emptyList(), tag: ByteArray = ByteArray(0)
+    code: ConsumerPresentModeCode,
+    value: ByteArray,
+    subTags: List<BERTLV> = emptyList(),
+    tag: ByteArray = ByteArray(0)
 ) : BERTLVImpl(code, value, subTags, tag) {
 
-    override fun format(): Format {
-        return Format.ALPHANUMERIC_SPECIAL
-    }
+    override fun format(): Format = Format.ALPHANUMERIC_SPECIAL
 }
 
 class Numeric(
-    code: ConsumerPresentModeCode, value: ByteArray, subTags: List<BERTLV> = emptyList(), tag: ByteArray = ByteArray(0)
+    code: ConsumerPresentModeCode,
+    value: ByteArray,
+    subTags: List<BERTLV> = emptyList(),
+    tag: ByteArray = ByteArray(0)
 ) : BERTLVImpl(code, value, subTags, tag) {
-    override fun format(): Format {
-        return Format.NUMERIC
-    }
+    override fun format(): Format = Format.NUMERIC
 }
 
 class CompressedNumeric(
-    code: ConsumerPresentModeCode, value: ByteArray, subTags: List<BERTLV> = emptyList(), tag: ByteArray = ByteArray(0)
+    code: ConsumerPresentModeCode,
+    value: ByteArray,
+    subTags: List<BERTLV> = emptyList(),
+    tag: ByteArray = ByteArray(0)
 ) : BERTLVImpl(code, value, subTags, tag) {
-    override fun format(): Format {
-        return Format.COMPRESSED_NUMERIC
-    }
-
+    override fun format(): Format = Format.COMPRESSED_NUMERIC
 }

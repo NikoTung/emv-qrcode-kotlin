@@ -7,7 +7,7 @@ import qrcode.emv.model.MerchantPresentMode
 
 class MerchantPresentModeDecode(
     private val source: String,
-    private val extraDecoder: Map<String, (String, String) -> Tag> = mapOf()
+    private val extraDecoder: MutableMap<String, (String, String) -> Tag> = mutableMapOf()
 ) {
 
     fun decode(): MerchantPresentMode {

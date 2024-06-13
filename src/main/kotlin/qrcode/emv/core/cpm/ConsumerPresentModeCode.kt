@@ -64,6 +64,11 @@ enum class ConsumerPresentModeCode(val tag: ByteArray, val format: Format, val t
             else -> tag
         }
     }
+
+    @OptIn(ExperimentalStdlibApi::class)
+    fun tagString(): String {
+        return tag.toHexString(format = HexFormat.UpperCase)
+    }
     companion object {
 
         fun valueBy(tag: ByteArray): ConsumerPresentModeCode {
