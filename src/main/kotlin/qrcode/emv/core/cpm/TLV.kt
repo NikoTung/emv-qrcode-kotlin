@@ -52,7 +52,7 @@ abstract class BERTLVImpl(
 
     override fun getBytes(): ByteArray {
         if (getLength() == 0) {
-            return ByteArray(1) { 0x00 }
+            return ByteArray(0)
         }
         return code.otherTag(tag) + Seeker.lengthToBytes(getLength()) + value()
     }

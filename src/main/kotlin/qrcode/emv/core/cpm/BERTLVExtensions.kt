@@ -71,4 +71,4 @@ fun BERTLV.last4DigitsOfPAN(): BERTLV? {
 
 fun BERTLV.tagClass() = TagClass.entries.first { it.i == byteArrayTag()[0].toInt() and CLASS_BITMASK }
 
-fun BERTLV.dataType(): DataType = DataType.entries.first { it.i == (byteArrayTag()[0].toInt() and TYPE_BITMASK) }
+fun BERTLV.dataType() = DataType.entries.first { it.i == (byteArrayTag()[0].toInt() and TYPE_BITMASK) }
