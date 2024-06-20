@@ -11,6 +11,21 @@ For the specification, please refer to the [EMVCo QR Code Specification](https:/
 - [ ] Decode transparent data like 0x63 and 0x64 in CPM 
 
 # Usage
+
+## Maven
+```xml
+<dependency>
+    <groupId>io.github.nikotung</groupId>
+    <artifactId>emv-qrcode-kotlin</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+## Gradle
+```groovy
+implementation("io.github.nikotung:emv-qrcode-kotlin:1.0.0")
+```
+
 ## MPM 
 ### Decode
 ```kotlin

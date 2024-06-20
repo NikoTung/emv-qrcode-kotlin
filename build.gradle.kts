@@ -3,8 +3,9 @@ plugins {
     id("idea")
     `maven-publish`
     `java-library`
-//    signing
+    id("org.jreleaser") version "1.12.0"
 }
+
 
 group = "io.github.nikotung"
 version = "1.0.0"
@@ -27,7 +28,7 @@ tasks.test {
     useJUnitPlatform()
 }
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(8)
 }
 
 val snapshot = "snapshot"
@@ -57,22 +58,44 @@ publishing {
     }
 
     repositories {
-        mavenCentral()
+        maven {
+            url = uri(layout.buildDirectory.dir("staging-deploy"))
+        }
     }
 
     publications {
-        create<MavenPublication>(snapshot) {
-            version = "${project.version}-SNAPSHOT"
-            from(components["java"])
-            pom.initPom()
-        }
-
         create<MavenPublication>(release) {
             version = "${project.version}"
 
             from(components["java"])
 
             pom.initPom()
+        }
+    }
+}
+
+
+
+jreleaser {
+    signing {
+        setActive("ALWAYS")
+        armored = true
+    }
+    release {
+        github {
+            enabled = false
+        }
+    }
+
+    deploy {
+        maven {
+            mavenCentral {
+                create("sonatype") {
+                    setActive("ALWAYS")
+                    url = "https://central.sonatype.com/api/v1/publisher"
+                    stagingRepository("build/staging-deploy")
+                }
+            }
         }
     }
 }
